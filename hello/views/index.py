@@ -5,4 +5,4 @@ def hello(request):
         'title' : 'Index',
         'message' : 'Hello World!!',
     }
-    return render(request, 'index.html', params)
+    return render(request, 'base.html', params)
