@@ -4,4 +4,8 @@
 
 {% block content %}
     <p>{{ message }}</p>
+    <hr />
+    {% for user in users %}
+        <p>{{ user }}</p>
+    {% endfor %}
 {% endblock %}
