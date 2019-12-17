@@ -7,8 +7,18 @@ class Member(models.Model):
     sex = models.CharField(verbose_name="性別", max_length=5, choices=choices)
 
     def __str__(self):
-        if self.sex=="0":
-            sex_data = "女"
+        return self.name
+
+class Group(models.Model):
+    member = models.ForeignKey(Member, verbose_name="名前", on_delete=models.CASCADE)
+    choices = ((0,"乃木坂46"),(1,"日向坂46"),(2,"キモオタ"))
+    name = models.IntegerField(verbose_name="グループ名", choices=choices)
+
+    def __str__(self):
+        if self.name == 0:
+            group_name = "乃木坂46"
+        elif self.name == 1:
+            group_name = "日向坂46"
         else:
-            sex_data = "男"
-        return "名前:" + self.name + " 年齢:" + str(self.age) + "歳 性別:" + sex_data + "性"
+            group_name = "キモオタ"
+        return str(self.member) + "(" + group_name + ")"
