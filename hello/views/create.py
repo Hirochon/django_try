@@ -1,7 +1,7 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.views.generic import View
-from ..forms import MemberForm
-from ..models import Member
+from ..forms import MemberForm, GroupForm
+from ..models import Member, Group
 
 class addView(View):
     def __init__(self):
@@ -18,8 +18,24 @@ class addView(View):
         obj = Member()
         member = MemberForm(request.POST, instance=obj)
         member.save()
-        self.params['message'] = 'くりえいとに成功しますぃた。'
-        self.params['form'] = MemberForm(request.POST)
-        return render(request, 'hello/create.html', self.params)
+        return redirect(to='/hello/morecreate/')
+
+class addmoreView(View):
+    def __init__(self):
+        self.params = {
+            'title' : 'ぐるうぷくりえいとぺえじ',
+            'message' : 'グループを選択してください！',
+            'form' : GroupForm(),
+        }
+
+    def get(self, request, *args, **kwargs):
+        return render(request, 'hello/morecreate.html', self.params)
+
+    def post(self, request, *args, **kwargs):
+        obj = Group()
+        group = GroupForm(request.POST, instance=obj)
+        group.save()
+        return redirect(to='/hello')
 
 add = addView.as_view()
+addmore = addmoreView.as_view()

@@ -4,4 +4,5 @@ from .views import index,create
 urlpatterns = [
     path('', index.hello, name='index'),
     path('create/', create.add, name='create'),
+    path('morecreate/', create.addmore, name='morecreate'),
 ]
