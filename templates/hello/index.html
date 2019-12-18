@@ -5,10 +5,11 @@
 {% block content %}
     <h1>{{ message }}</h1>
     <hr />
-    {% for group in groups %}
-        <p>{{ group.member.name }}({{ group.member.get_sex_display }})</p>
-        <p>{{ group.get_name_display }}</p>
-        <hr />
-    {% endfor %}
+    <table>
+        <tr><th>メンバー</th><th>グループ</th></tr>
+        {% for group in groups %}
+        <tr><td>{{ group.member.name }}({{ group.member.get_sex_display }}性)</td><td>{{ group.get_name_display }}</td></tr>
+        {% endfor %}
+    </table>
     <a href="{% url 'create' %}">くりえいとぺえじへ</a>
 {% endblock %}
