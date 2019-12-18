@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+
+{% block page_title %}{{ title }}{% endblock %}
+
+{% block content %}
+    <h1>{{ message }}</h1>
+    <table>
+        <form action="{% url 'create' %}" method="post">
+            {% csrf_token %}
+            {{ form }}
+            <tr><th></th><td><input type="submit" value="くりっく"></td></tr>
+        </form>
+    </table>
+    <a href="{% url 'index' %}">homeへ戻る</a>
+{% endblock %}
