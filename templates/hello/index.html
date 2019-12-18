@@ -6,9 +6,9 @@
     <h1>{{ message }}</h1>
     <hr />
     <table>
-        <tr><th>メンバー</th><th>グループ</th></tr>
+        <tr><th>メンバー</th><th>グループ</th><th>編集</th><th>年齢</th></tr>
         {% for group in groups %}
-        <tr><td>{{ group.member.name }}({{ group.member.get_sex_display }}性)</td><td>{{ group.get_name_display }}</td></tr>
+        <tr><td>{{ group.member.name }}({{ group.member.get_sex_display }}性)</td><td>{{ group.get_name_display }}</td><td><a href="{% url 'edit' group.member.id %}">Edit</a></td><td>{{ group.member.age }}</td></tr>
         {% endfor %}
     </table>
     <a href="{% url 'create' %}">くりえいとぺえじへ</a>
