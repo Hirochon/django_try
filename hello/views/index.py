@@ -1,6 +1,6 @@
 from django.shortcuts import render
 from django.views import View
-from django.contrib.auth.models import User
+from ..models import Member, Group
 
 ## 関数を用いたviewの書き方
 """
@@ -15,11 +15,13 @@ def hello(request):
 ## クラスを用いたviewの書き方
 class HelloView(View):
     def get(self, request, *args, **kwargs):
-        users = User.objects.all()
+        members = Member.objects.all()
+        groups = Group.objects.all()
         params = {
             'title' : 'Index',
             'message' : 'Hello Class World!!',
-            'users' : users,
+            'members' : members,
+            'groups' : groups,
         }
         return render(request, 'hello/index.html', params)
 
