@@ -1,5 +1,5 @@
-makemigrations:
-	docker-compose run --rm django_try python3 manage.py makemigrations
+makemigrations-hello:
+	docker-compose run --rm django_try python3 manage.py makemigrations hello
 
 migrate:
 	docker-compose run --rm django_try python3 manage.py migrate
