@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+
+{% block page_title %}{{ title }}{% endblock %}
+
+{% block content %}
+    <h1>{{ message }}</h1>
+    <table>
+        <tr><th>ID</th><td>{{items.id}}</td></tr>
+        <tr><th>名前</th><td>{{items.name}}</td></tr>
+        <tr><th>年齢</th><td>{{items.age}}</td></tr>
+        <tr><th>性別</th><td>{{items.get_sex_display}}</td></tr>
+        <form action="{% url 'delete' id %}" method="post">
+            {% csrf_token %}
+            <tr><th></th><td><input type="submit" value="くりっく"></td></tr>
+        </form>
+    </table>
+    <a href="{% url 'index' %}">homeへ戻る</a>
+{% endblock %}
