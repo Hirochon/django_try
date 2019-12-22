@@ -1,5 +1,7 @@
-makemigrations-hello:
-	docker-compose run --rm django_try python3 manage.py makemigrations hello
+folder := ""
+
+makemigrations:
+	docker-compose run --rm django_try python3 manage.py makemigrations $(folder)
 
 migrate:
 	docker-compose run --rm django_try python3 manage.py migrate
@@ -9,3 +11,6 @@ createsuperuser:
 
 shell:
 	docker-compose run --rm django_try python3 manage.py shell
+
+startapp:
+	docker-compose run --rm django_try python3 manage.py startapp $(folder)

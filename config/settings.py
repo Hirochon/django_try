@@ -38,6 +38,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'hello',
+    'accounts.apps.AccountsConfig',
 ]
 
 MIDDLEWARE = [
@@ -90,6 +91,8 @@ DATABASES = {
 ##################
 
 LOGIN_REDIRECT_URL = 'home'
+LOGOUT_REDIRECT_URL = '/accounts/login/'
+AUTH_USER_MODEL = 'accounts.CustomUser'
 
 # Password validation
 # https://docs.djangoproject.com/en/3.0/ref/settings/#auth-password-validators
@@ -129,3 +132,10 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static')]
+
+
+##################
+# Email settings #
+##################
+
+EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
