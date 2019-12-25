@@ -137,6 +137,14 @@ STATIC_URL = '/static/'
 STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static')]
 
 
+###############
+# Media Files #
+###############
+
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media_root')
+MEDIA_URL = '/media/'
+
+
 if DEBUG:
     LOGGING = {
         'version' : 1,                          #バージョンは1に固定
