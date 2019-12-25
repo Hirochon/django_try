@@ -2,7 +2,7 @@ import os
 from .sub_settings import *
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
-BASE_DIR = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+BASE_DIR = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))     #settingsフォルダ内のsettings.pyなので、通常より1 more pathしてる
 
 
 # SECURITY WARNING: don't run with debug turned on in production!
@@ -20,16 +20,16 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'hello',
-    'accounts.apps.AccountsConfig',
-    'django_ses',
-    'django.contrib.sites',
-    'allauth',
-    'allauth.account',
-    'allauth.socialaccount',
+    'hello',                            #Helloアプリ
+    'accounts.apps.AccountsConfig',     #defaultのDjangoログイン機能の実装してた名残
+    'django_ses',                       #Django-sesアプリ
+    'django.contrib.sites',             #allauthではサイトを識別するsiteフレームワークが必須なためインストール
+    'allauth',                          #allauthアプリ
+    'allauth.account',                  #allauthの基本的なログイン認証系
+    'allauth.socialaccount',            #ソーシャル認証
 ]
 
-SITE_ID = 1
+SITE_ID = 1     #サイトの識別ID
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -80,9 +80,10 @@ DATABASES = {
 # Authentication #
 ##################
 
-LOGIN_REDIRECT_URL = 'home'
-LOGOUT_REDIRECT_URL = '/accounts/login/'
-AUTH_USER_MODEL = 'accounts.CustomUser'
+LOGIN_REDIRECT_URL = 'home'         #ログイン後のリダイレクト先
+LOGOUT_REDIRECT_URL = '/accounts/login/'    #ログアウト後のリダイレクト先
+AUTH_USER_MODEL = 'accounts.CustomUser'     #モデルの追加(今はOFF)
+ACCOUNT_EMAIL_REQUIRED = True      # 登録時にメールアドレスを必須項目にする。
 
 # Password validation
 # https://docs.djangoproject.com/en/3.0/ref/settings/#auth-password-validators
@@ -123,6 +124,8 @@ USE_TZ = True
 STATIC_URL = '/static/'
 STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static')]
 
+
+# 同ディレクトリのsub_settings.pyをインポート
 
 try:
     from .sub_settings import *
