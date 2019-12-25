@@ -29,6 +29,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'hello',                            #Helloアプリ
+    'fav',                              #favアプリ
     'accounts.apps.AccountsConfig',     #defaultのDjangoログイン機能の実装してた名残
     'django_ses',                       #Django-sesアプリ
     'django.contrib.sites',             #allauthではサイトを識別するsiteフレームワークが必須なためインストール
