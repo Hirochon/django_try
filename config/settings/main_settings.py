@@ -22,8 +22,14 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'hello',
     'accounts.apps.AccountsConfig',
-    'django_ses'
+    'django_ses',
+    'django.contrib.sites',
+    'allauth',
+    'allauth.account',
+    'allauth.socialaccount',
 ]
+
+SITE_ID = 1
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
