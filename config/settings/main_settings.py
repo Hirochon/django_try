@@ -1,6 +1,14 @@
 import os
 from .sub_settings import *
 
+# 同ディレクトリのsub_settings.pyをインポート
+
+try:
+    from .sub_settings import *
+except ImportError:
+    pass
+
+
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))     #settingsフォルダ内のsettings.pyなので、通常より1 more pathしてる
 
@@ -129,9 +137,46 @@ STATIC_URL = '/static/'
 STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static')]
 
 
-# 同ディレクトリのsub_settings.pyをインポート
+if DEBUG:
+    LOGGING = {
+        'version' : 1,                          #バージョンは1に固定
+        'disable_existing_loggers' : False,     #既存のログ設定を無効化しない
 
-try:
-    from .sub_settings import *
-except ImportError:
-    pass
+        #ログフォーマット
+        'formatters' : {
+            #開発用
+            'develop' : {
+                'format' : '%(asctime)s [%(levelname)s] %(pathname)s:%(lineno)d %(message)s'
+            },
+        },
+        #ハンドラ
+        'handlers' : {
+            #コンソール出力用ハンドラ
+            'console' : {
+                'level' : 'DEBUG',
+                'class' : 'logging.StreamHandler',
+                'formatter' : 'develop',
+            },
+        },
+        #ロガー
+        'loggers' : {
+            #自作アプリケーション全般のログを拾うロガー
+            '' : {
+                'handlers' : ['console'],
+                'level' : 'DEBUG',
+                'propagate' : False,
+            },
+            #Django本体が出すログ全般を拾うロガー
+            'django' : {
+                'handlers' : ['console'],
+                'level' : 'INFO',
+                'propagate' : False,
+            },
+            #発行されるSQL文を出力するための設定
+            'django.db.backends' : {
+                'handlers' : ['console'],
+                'level' : 'DEBUG',
+                'propagate' : False,
+            },
+        },
+    }
