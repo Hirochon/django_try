@@ -3,5 +3,5 @@ from . import views
 
 urlpatterns = [
     path('create/', views.CreateFavoriteView.as_view(), name='fav_create'),
-    path('', views.lookfavView.as_view(), name='fav_look'),
+    path('', views.lookfavView.as_view(), name='fav'),
 ]
