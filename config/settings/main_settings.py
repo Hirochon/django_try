@@ -1,22 +1,12 @@
 import os
 from .sub_settings import *
 
-# 同ディレクトリのsub_settings.pyをインポート
-
-try:
-    from .sub_settings import *
-except ImportError:
-    pass
-
-
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))     #settingsフォルダ内のsettings.pyなので、通常より1 more pathしてる
 
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
-
-ALLOWED_HOSTS = []
 
 
 # Application definition
@@ -36,6 +26,7 @@ INSTALLED_APPS = [
     'allauth',                          #allauthアプリ
     'allauth.account',                  #allauthの基本的なログイン認証系
     'allauth.socialaccount',            #ソーシャル認証
+    'storages'
 ]
 
 SITE_ID = 1     #サイトの識別ID
@@ -132,18 +123,15 @@ USE_TZ = True
 
 
 # Static files (CSS, JavaScript, Images)
-# https://docs.djangoproject.com/en/3.0/howto/static-files/
 
 STATIC_URL = '/static/'
 STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static')]
 
 
-###############
-# Media Files #
-###############
+# Media Files
 
-MEDIA_ROOT = os.path.join(BASE_DIR, 'media_root')
 MEDIA_URL = '/media/'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media_root')
 
 
 if DEBUG:
@@ -185,6 +173,49 @@ if DEBUG:
             'django.db.backends' : {
                 'handlers' : ['console'],
                 'level' : 'DEBUG',
+                'propagate' : False,
+            },
+        },
+    }
+else:
+    LOGGING = {
+        'version' : 1,                          #バージョンは1に固定
+        'disable_existing_loggers' : False,     #既存のログ設定を無効化しない
+
+        #ログフォーマット
+        'formatters' : {
+            #開発用
+            'production' : {
+                'format' : '%(asctime)s [%(levelname)s] %(process)d %(thread)d %(pathname)s:%(lineno)d %(message)s'
+            },
+        },
+        #ハンドラ
+        'handlers' : {
+            #コンソール出力用ハンドラ
+            'console' : {
+                'level' : 'INFO',
+                'class' : 'logging.StreamHandler',
+                'formatter' : 'production',
+            },
+        },
+        #ロガー
+        'loggers' : {
+            #自作アプリケーション全般のログを拾うロガー
+            '' : {
+                'handlers' : ['console'],
+                'level' : 'INFO',
+                'propagate' : False,
+            },
+            #Django本体が出すログ全般を拾うロガー
+            'django' : {
+                'handlers' : ['console'],
+                'level' : 'INFO',
+                'propagate' : False,
+            },
+            #発行されるSQL文を出力するための設定
+            'django.db.backends' : {
+                'handlers' : ['console'],
+                'level' : 'INFO',
                 'propagate' : False,
             },
         },

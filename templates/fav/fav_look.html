@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+
+{% block title %}ファボ一覧{% endblock %}
+
+{% block content %}
+    <h2>ファボ一覧だよ〜</h2>
+    {% for favorite in favorites %}
+        <div>
+            <h3>{{favorite.title}}</h3>
+            <p>{{favorite.submitter}} : {{favorite.created_at}}</p>
+            <p>{{favorite.comment}}</p>
+            <img src="{{favorite.photo.url}}" />
+        </div>
+    {% endfor %}
+{% endblock %}

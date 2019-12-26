@@ -2,6 +2,7 @@ from django.shortcuts import render, redirect, reverse
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.views import View
 from .forms import FavoriteForm
+from .models import Favorite
 
 class CreateFavoriteView(LoginRequiredMixin, View):
     def __init__(self):
@@ -22,4 +23,7 @@ class CreateFavoriteView(LoginRequiredMixin, View):
         favorite.save()
         return redirect(to='/fav')
 
-createfav = CreateFavoriteView.as_view()
+class lookfavView(View):
+    def get(self, request, *args, **kwargs):
+        favorites = Favorite.objects.all().order_by('-id') 
+        return render(request, 'fav/fav_look.html', {'favorites' : favorites})

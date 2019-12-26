@@ -1,6 +1,7 @@
 from django.urls import path
-from .views import createfav
+from . import views
 
 urlpatterns = [
-    path('', createfav, name='fav_create'),
+    path('create/', views.CreateFavoriteView.as_view(), name='fav_create'),
+    path('', views.lookfavView.as_view(), name='fav'),
 ]
