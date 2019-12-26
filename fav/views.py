@@ -25,8 +25,5 @@ class CreateFavoriteView(LoginRequiredMixin, View):
 
 class lookfavView(View):
     def get(self, request, *args, **kwargs):
-        favorites = Favorite.objects.all()
-        params = {
-            'favorites' : favorites
-        }
-        return render(request, 'fav/fav_look.html', params)
+        favorites = Favorite.objects.all().order_by('-id') 
+        return render(request, 'fav/fav_look.html', {'favorites' : favorites})
