@@ -2,6 +2,7 @@ from django.shortcuts import render, redirect, reverse
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.views import View
 from .forms import FavoriteForm
+from .models import Favorite
 
 class CreateFavoriteView(LoginRequiredMixin, View):
     def __init__(self):
@@ -21,3 +22,11 @@ class CreateFavoriteView(LoginRequiredMixin, View):
         # モデルオブジェクトのsave()時にファイルがアップロードされる。
         favorite.save()
         return redirect(to='/fav')
+
+class lookfavView(View):
+    def get(self, request, *args, **kwargs):
+        favorites = Favorite.objects.all()
+        params = {
+            'favorites' : favorites
+        }
+        return render(request, 'fav/fav_look.html', params)
