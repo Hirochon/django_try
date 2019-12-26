@@ -21,5 +21,3 @@ class CreateFavoriteView(LoginRequiredMixin, View):
         # モデルオブジェクトのsave()時にファイルがアップロードされる。
         favorite.save()
         return redirect(to='/fav')
-
-createfav = CreateFavoriteView.as_view()
