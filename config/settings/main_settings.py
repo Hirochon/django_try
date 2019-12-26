@@ -1,8 +1,16 @@
 import os
 from .sub_settings import *
 
+# 同ディレクトリのsub_settings.pyをインポート
+
+try:
+    from .sub_settings import *
+except ImportError:
+    pass
+
+
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
-BASE_DIR = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+BASE_DIR = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))     #settingsフォルダ内のsettings.pyなので、通常より1 more pathしてる
 
 
 # SECURITY WARNING: don't run with debug turned on in production!
@@ -20,10 +28,17 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'hello',
-    'accounts.apps.AccountsConfig',
-    'django_ses'
+    'hello',                            #Helloアプリ
+    'fav',                              #favアプリ
+    'accounts.apps.AccountsConfig',     #defaultのDjangoログイン機能の実装してた名残
+    'django_ses',                       #Django-sesアプリ
+    'django.contrib.sites',             #allauthではサイトを識別するsiteフレームワークが必須なためインストール
+    'allauth',                          #allauthアプリ
+    'allauth.account',                  #allauthの基本的なログイン認証系
+    'allauth.socialaccount',            #ソーシャル認証
 ]
+
+SITE_ID = 1     #サイトの識別ID
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -74,9 +89,14 @@ DATABASES = {
 # Authentication #
 ##################
 
-LOGIN_REDIRECT_URL = 'home'
-LOGOUT_REDIRECT_URL = '/accounts/login/'
-AUTH_USER_MODEL = 'accounts.CustomUser'
+LOGIN_REDIRECT_URL = 'home'         #ログイン後のリダイレクト先
+LOGOUT_REDIRECT_URL = '/accounts/login/'    #ログアウト後のリダイレクト先
+AUTH_USER_MODEL = 'accounts.CustomUser'     #モデルの追加(今はOFF)
+ACCOUNT_EMAIL_REQUIRED = True      # 登録時にメールアドレスを必須項目にする。
+AUTHENTICATION_BACKENDS = (
+    'django.contrib.auth.backends.ModelBackend',                # デフォルトの設定
+    'allauth.account.auth_backends.AuthenticationBackend',      # allauthの認証方式
+)
 
 # Password validation
 # https://docs.djangoproject.com/en/3.0/ref/settings/#auth-password-validators
@@ -118,7 +138,54 @@ STATIC_URL = '/static/'
 STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static')]
 
 
-try:
-    from .sub_settings import *
-except ImportError:
-    pass
+###############
+# Media Files #
+###############
+
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media_root')
+MEDIA_URL = '/media/'
+
+
+if DEBUG:
+    LOGGING = {
+        'version' : 1,                          #バージョンは1に固定
+        'disable_existing_loggers' : False,     #既存のログ設定を無効化しない
+
+        #ログフォーマット
+        'formatters' : {
+            #開発用
+            'develop' : {
+                'format' : '%(asctime)s [%(levelname)s] %(pathname)s:%(lineno)d %(message)s'
+            },
+        },
+        #ハンドラ
+        'handlers' : {
+            #コンソール出力用ハンドラ
+            'console' : {
+                'level' : 'DEBUG',
+                'class' : 'logging.StreamHandler',
+                'formatter' : 'develop',
+            },
+        },
+        #ロガー
+        'loggers' : {
+            #自作アプリケーション全般のログを拾うロガー
+            '' : {
+                'handlers' : ['console'],
+                'level' : 'DEBUG',
+                'propagate' : False,
+            },
+            #Django本体が出すログ全般を拾うロガー
+            'django' : {
+                'handlers' : ['console'],
+                'level' : 'INFO',
+                'propagate' : False,
+            },
+            #発行されるSQL文を出力するための設定
+            'django.db.backends' : {
+                'handlers' : ['console'],
+                'level' : 'DEBUG',
+                'propagate' : False,
+            },
+        },
+    }

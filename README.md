@@ -8,7 +8,7 @@ django_tryという名前にふさわしくDjangoを用いて様々な機能に�
 - Docker
 - docker-compose
 - Python3.8.0
-- Django3.0
+- Django2.2.9
 - PostgreSQL
 
 ## 開発の流れ

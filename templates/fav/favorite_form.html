@@ -1,0 +1,12 @@
+{% extends "base.html" %}
+
+{% block title %}ファボ投稿{% endblock %}
+
+{% block content %}
+    <h2>ファボを投稿しよう</h2>
+    <form method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <input type="submit" value="投稿" />
+    </form>
+{% endblock %}
