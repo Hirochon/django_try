@@ -83,7 +83,7 @@ DATABASES = {
 
 LOGIN_REDIRECT_URL = 'home'         #ログイン後のリダイレクト先
 LOGOUT_REDIRECT_URL = '/accounts/login/'    #ログアウト後のリダイレクト先
-AUTH_USER_MODEL = 'accounts.CustomUser'     #モデルの追加(今はOFF)
+AUTH_USER_MODEL = 'accounts.CustomUser'     #カスタムユーザーモデルの定義
 ACCOUNT_EMAIL_REQUIRED = True      # 登録時にメールアドレスを必須項目にする。
 AUTHENTICATION_BACKENDS = (
     'django.contrib.auth.backends.ModelBackend',                # デフォルトの設定
