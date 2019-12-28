@@ -8,3 +8,4 @@ class CustomUser(AbstractUser):
         db_table = 'custom_user'
     
     age = models.IntegerField('年齢', blank=True, null=True)
+    email = models.EmailField('メールアドレス', unique=True)
