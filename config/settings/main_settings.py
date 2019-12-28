@@ -26,7 +26,8 @@ INSTALLED_APPS = [
     'allauth',                          #allauthアプリ
     'allauth.account',                  #allauthの基本的なログイン認証系
     'allauth.socialaccount',            #ソーシャル認証
-    'storages'
+    'storages',                         #S3
+    'django_cleanup',                   #Gomiファイルを自動的に削除奴
 ]
 
 SITE_ID = 1     #サイトの識別ID

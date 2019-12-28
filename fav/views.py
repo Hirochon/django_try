@@ -19,7 +19,6 @@ class CreateFavoriteView(LoginRequiredMixin, View):
 
         favorite = form.save(commit=False)
         favorite.submitter = self.request.user
-        # モデルオブジェクトのsave()時にファイルがアップロードされる。
         favorite.save()
         return redirect(to='/fav')
 

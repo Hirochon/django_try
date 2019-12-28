@@ -1,6 +1,6 @@
 folder := ""
 
-makemigrations:
+migrations:
 	docker-compose run --rm django_try python3 manage.py makemigrations $(folder)
 
 migrate:
